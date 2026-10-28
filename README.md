@@ -1,4 +1,4 @@
-# ZX Spectrum Games
+# ZX Spectrum Games & Fun
 
 Small games for the 48K ZX Spectrum, written in Sinclair BASIC and Z80 assembly.
 
