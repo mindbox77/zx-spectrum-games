@@ -17,6 +17,8 @@ Each one is small enough to read in a sitting. That is the point. If you want to
 | Game | Where | What it is |
 | --- | --- | --- |
 | [Trick or Treat](Basic/trick-or-treat/) | Basic | A Halloween game of nerve. Eight doors, one bag, midnight coming. |
+| [Sinclair Kick](Fun/sinclair-kick/) | Fun | A stickman kicks the boot screen's copyright line off the screen. BASIC, with UDGs. |
+| [Sinclair Kick, machine code](Assembly/sinclair-kick-asm/) | Assembly | The same joke in Z80, pixel positioned, with the letters zooming at you. |
 
 More as they get finished.
 
