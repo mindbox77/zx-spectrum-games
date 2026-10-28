@@ -1,0 +1,56 @@
+:root {
+  --black: #000000;
+  --white: #D7D7D7;
+  --bright-white: #FFFFFF;
+  --yellow: #FFFF00;
+  --cyan: #00FFFF;
+  --red: #FF0000;
+  --blue: #0000D7;
+  --magenta: #D700D7;
+  --grey: #777777;
+  --body: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --head: "Press Start 2P", var(--body);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--black); color: var(--white); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+a { color: var(--cyan); text-decoration: none; }
+a:hover { color: var(--bright-white); text-decoration: underline; }
+
+/* loading border: pilot tone (cyan/red) then data (yellow/blue) */
+.border {
+  height: 14px;
+  background:
+    repeating-linear-gradient(90deg, var(--cyan) 0 20px, var(--red) 20px 40px) left/55% 100% no-repeat,
+    repeating-linear-gradient(90deg, var(--yellow) 0 5px, var(--blue) 5px 11px, var(--yellow) 11px 14px, var(--blue) 14px 22px) right/45% 100% no-repeat;
+}
+
+.wrap { max-width: 880px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { font-family: var(--head); font-size: 20px; color: var(--yellow); margin: 0 0 8px; line-height: 1.6; }
+h1 small { display: block; font-family: var(--body); font-size: 15px; color: var(--white); margin-top: 6px; }
+h2 { font-family: var(--head); font-size: 13px; color: var(--cyan); margin: 40px 0 16px; letter-spacing: 1px; }
+p.lede { margin: 0 0 8px; max-width: 64ch; }
+
+.game { display: grid; grid-template-columns: 160px 1fr; gap: 16px; padding: 16px 0; border-top: 1px solid #222; }
+.game:last-child { border-bottom: 1px solid #222; }
+.game img { width: 160px; height: 120px; image-rendering: pixelated; background: var(--black); border: 1px solid #333; }
+.game .noshot { width: 160px; height: 120px; border: 1px dashed #333; display: grid; place-items: center; color: var(--grey); font-size: 12px; }
+.game h3 { margin: 0 0 6px; font-size: 17px; color: var(--bright-white); }
+.game p { margin: 0 0 10px; color: var(--white); }
+.actions a { display: inline-block; margin-right: 14px; font-size: 14px; }
+.actions a.play { color: var(--black); background: var(--yellow); padding: 4px 10px; }
+.actions a.play:hover { background: var(--bright-white); text-decoration: none; }
+@media (max-width: 560px) {
+  .game { grid-template-columns: 1fr; }
+  .game img, .game .noshot { width: 100%; height: auto; aspect-ratio: 4/3; }
+}
+
+/* play page */
+.emu { margin: 24px 0; padding: 12px; background:
+    repeating-linear-gradient(90deg, var(--yellow) 0 6px, var(--blue) 6px 14px);
+}
+.emu > div { background: var(--black); display: flex; justify-content: center; }
+#jsspeccy { max-width: 100%; }
+.keys { font-size: 14px; color: var(--white); }
+.keys code { color: var(--yellow); }
+footer { margin-top: 48px; font-size: 13px; color: var(--grey); }
+footer a { color: var(--grey); text-decoration: underline; }

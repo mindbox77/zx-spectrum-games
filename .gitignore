@@ -1,0 +1,8 @@
+build/
+*.tap
+*.tzx
+!docs/**/*.tap
+*.sna
+*.z80
+*.log
+.DS_Store

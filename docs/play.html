@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Play</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script src="jsspeccy/jsspeccy.js"></script>
+</head>
+<body>
+<div class="border"></div>
+<div class="wrap">
+  <p><a href="index.html">&larr; All games</a></p>
+  <h1 id="title">Loading...</h1>
+  <p class="lede" id="blurb"></p>
+
+  <div class="emu"><div id="jsspeccy"></div></div>
+
+  <p class="keys">The tape loads itself. Click the screen first so it gets your keyboard. <code>Esc</code> toggles the menu for full screen, reset and tape controls. Sound is on by default in most browsers once you have clicked.</p>
+  <p class="actions"><a id="src" href="#">Source</a> <a id="tape" href="#" download>Download tape</a></p>
+
+  <footer>
+    Emulation by <a href="https://github.com/gasman/jsspeccy3">JSSpeccy 3</a> (GPL, fetched at build time, not part of this repo).
+  </footer>
+</div>
+<script>
+const REPO = "https://github.com/mindbox77/zx-spectrum-games";
+const slug = new URLSearchParams(location.search).get("g");
+fetch("games.json").then(r => r.json()).then(games => {
+  const g = games.find(x => x.slug === slug);
+  if (!g) { document.getElementById("title").textContent = "No such game"; return; }
+  document.title = g.title;
+  document.getElementById("title").textContent = g.title;
+  document.getElementById("blurb").textContent = g.blurb || "";
+  document.getElementById("src").href = `${REPO}/tree/main/${g.section}/${g.slug}`;
+  document.getElementById("tape").href = `tapes/${g.slug}.tap`;
+  JSSpeccy(document.getElementById("jsspeccy"), {
+    machine: g.machine || 48,
+    zoom: 2,
+    autoStart: true,
+    autoLoadTapes: true,
+    openUrl: `tapes/${g.slug}.tap`
+  });
+});
+</script>
+</body>
+</html>

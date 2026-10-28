@@ -1,0 +1,7 @@
+*.bas linguist-language=BASIC text eol=lf
+*.asm linguist-language=Assembly
+*.inc linguist-language=Assembly
+*.tap binary
+*.tzx binary
+*.scr binary
+docs/jsspeccy/** linguist-vendored

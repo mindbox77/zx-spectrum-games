@@ -1,0 +1,63 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q zmakebas pasmo
+      - name: Build tapes and site
+        run: tools/build.sh
+      - name: Keep the tapes
+        uses: actions/upload-artifact@v4
+        with:
+          name: tapes
+          path: build/*.tap
+      - name: Stage site for Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/site
+
+  pages:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: tapes
+          path: tapes
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: tapes/*.tap
+          generate_release_notes: true

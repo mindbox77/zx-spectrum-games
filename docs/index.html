@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZX Spectrum Games</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<div class="border"></div>
+<div class="wrap">
+  <h1>ZX Spectrum Games<small>Small games for the 48K Spectrum, in Sinclair BASIC and Z80 assembly, by Damian Cooper.</small></h1>
+  <p class="lede">Everything here runs in your browser, no emulator to install. Each game also has its plain text source on GitHub and a tape you can load on a real machine.</p>
+
+  <div id="list"><p>Loading the catalogue...</p></div>
+
+  <footer>
+    Source on <a href="https://github.com/mindbox77/zx-spectrum-games">GitHub</a>.
+    Games are <a href="LICENSE.txt">CC BY-NC-SA 4.0</a>.
+    In-browser emulation by <a href="https://github.com/gasman/jsspeccy3">JSSpeccy 3</a>.
+  </footer>
+</div>
+<script>
+const REPO = "https://github.com/mindbox77/zx-spectrum-games";
+const ORDER = ["Basic", "Fun", "Assembly"];
+const BLURB = {
+  Basic: "Proper games in Sinclair BASIC. Load, RUN, play.",
+  Fun: "Toys, party pieces and things that are not quite games.",
+  Assembly: "Z80 machine code, built with pasmo."
+};
+fetch("games.json").then(r => r.json()).then(games => {
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+  for (const s of ORDER) {
+    const inSection = games.filter(g => g.section === s);
+    if (!inSection.length) continue;
+    const h = document.createElement("h2"); h.textContent = s.toUpperCase(); list.appendChild(h);
+    const p = document.createElement("p"); p.className = "lede"; p.textContent = BLURB[s]; list.appendChild(p);
+    for (const g of inSection) {
+      const el = document.createElement("div"); el.className = "game";
+      const shot = g.shot
+        ? `<img src="tapes/${g.slug}.png" alt="${g.title} screenshot" width="160" height="120">`
+        : `<div class="noshot">no screenshot yet</div>`;
+      el.innerHTML = `${shot}<div>
+        <h3>${g.title}</h3>
+        <p>${g.blurb || ""}</p>
+        <div class="actions">
+          <a class="play" href="play.html?g=${encodeURIComponent(g.slug)}">Play</a>
+          <a href="${REPO}/tree/main/${g.section}/${g.slug}">Source</a>
+          <a href="tapes/${g.slug}.tap" download>Tape</a>
+        </div></div>`;
+      list.appendChild(el);
+    }
+  }
+}).catch(() => { document.getElementById("list").innerHTML = "<p>Could not load games.json.</p>"; });
+</script>
+</body>
+</html>
