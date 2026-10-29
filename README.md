@@ -48,16 +48,6 @@ tools/shot.sh trick-or-treat space   # headless Fuse, LOAD "", press keys, scree
 
 The site uses [JSSpeccy 3](https://github.com/gasman/jsspeccy3) for emulation. It is GPL and this repo is Creative Commons, so the build fetches it from its release zip rather than vendoring it. Set `JSSPECCY_ZIP` to a local copy if you are offline.
 
-## Conventions
-
-BASIC source is the plain text format that zmakebas and bas2tap read: one numbered line per line, keywords in upper case, `GO TO` and `GO SUB` with the space, UDGs referred to as `CHR$ 144` and up rather than embedded. It diffs properly, which is the whole reason for keeping it as text.
-
-Autostart is always line 10. No REM lines in shipped listings; the README is the documentation.
-
-Assembly follows the same rules as [zxdesk](https://github.com/mindbox77/zxdesk): pasmo, `.asm` plus `.inc` modules, measured numbers in the commit messages.
-
-One commit per verified piece of work. Verified means it has been loaded in Fuse with the real 48K ROM and played, not just tokenised.
-
 ## Licence
 
 Everything here is my own work. Nothing is derived from anyone else's code.
